@@ -1,0 +1,15 @@
+{
+	name: 'izSpeedometer',
+	version: '1.0',
+	title: 'A speedometer chart',
+	author: 'Daniel Önnerby',
+	licenses: [
+		{
+			type: 'BSD New',
+			url: 'http://www.opensource.org/licenses/BSD-3-Clause'
+		}
+	],
+	description: 'A jQuery speedometer plugin using raphaeljs.',
+	demo: 'http://soldaten.intermezzon.com/izSpeedometer/example.html',
+	homepage: 'https://github.com/Intermezzon/izSpeedometer'
+}
