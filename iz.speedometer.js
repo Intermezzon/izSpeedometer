@@ -1,13 +1,6 @@
 ( function($) {
 	
 	$.fn["izspeedometer"] = function(options,arg2){
-		if(typeof(options)=="string"){
-			if(options=="setValue"){
-				$(this).data("val",arg2);
-			}
-			return this;
-		}
-		
 		return this.each( function(){
 			// Standard init option stuff
 			var opts	= $(this).data("options");
@@ -15,13 +8,16 @@
 				  opts = $.extend({}, $.fn.izspeedometer.defaults, options);
 			}else{
 				$.extend(opts, options);
-				$(this).data('options', opts);
 			}
+			$(this).data('options', opts);
 			/////////////////////////////////////
 			// Lets render the speedometer
 			if(opts.height=="auto"){
-				opts.height=opts.width*1.3;
+				opts.height=opts.width*1.2;
 			}
+			
+			// Clear everything
+			$(this).empty();
 			
 			var p	= Raphael($(this).get(0),opts.width,opts.height);
 			var cX	= opts.width/2;
@@ -117,7 +113,7 @@
 			var drawText	= false;
 			
 			var pathInterval=setInterval( function(){
-				if(!obj.data('val')){
+				if(obj.data('val')===null){
 					return;
 				}
 				var value	= obj.data('val');
@@ -142,6 +138,18 @@
 						fill:opts.textColor,
 						width: 50
 						});
+					var legend=p.text(cX,cY+r*0.7, opts.legendText ).attr({
+						"font-family":"Arial",
+						"font-size":"10px",
+						fill:opts.textColor,
+						width: 50
+						});
+					var lb	= legend.getBBox();
+					p.rect(lb.x-2,lb.y-2,lb.width+4,lb.height+4).attr({
+						fill:opts.barBackgroundColor,
+						'stroke-width': 0
+					});
+					legend.toFront();
 				}
 				
 				
@@ -183,8 +191,9 @@
 		min: 0,
 		max: 100,
 		value: null,
-		unit: '%',
+		unit: '',
 		valueText: '',
+		legendText: '',
 		width: 135,
 		height: "auto",
 		thickness: 6,
